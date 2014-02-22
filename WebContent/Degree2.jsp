@@ -43,6 +43,7 @@
 	</table>
 	<input type="hidden" value="<%=request.getParameter("concentration_id")%>" name="concentration_id">
 	<input type="hidden" value="<%=request.getParameter("type") %>" name="type">
+	<input type="hidden" value="<%=request.getParameter("degree_id") %>" name="degree_id">
 </form>
 <%
 	conn.close();

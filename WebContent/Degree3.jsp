@@ -17,11 +17,11 @@
   <% 
 	Statement statement = conn.createStatement();
 
+  	ResultSet rs = null;
 	ResultSet rs2 = statement.executeQuery("SELECT * FROM \"Concentration\"");
 
   %>
   <%
-	ResultSet rs = null;
 	int degree_id = 0;
 
 	String action = request.getParameter("action");
@@ -33,21 +33,32 @@
 		// Create prepared statement and use it to INSERT the Class
 		// attributes INTO the Course table.
 		PreparedStatement pstmt;
-
-		if(request.getParameter("concentration_id").equals("Skip")) {
-			pstmt = conn.prepareStatement(
-					"INSERT INTO \"Degree\"(type) VALUES (?) returning degree_id");
-			pstmt.setString(1, request.getParameter("type"));
+		
+		if(!request.getParameter("degree_id").equals("null")) {
+			rs = statement.executeQuery("SELECT * FROM \"Degree\" WHERE degree_id=" + request.getParameter("degree_id"));
+			System.err.println("degree_id from param not null");
+		}
+		
+		if(rs == null) {
+			if(request.getParameter("concentration_id").equals("Skip")) {
+				pstmt = conn.prepareStatement(
+						"INSERT INTO \"Degree\"(type) VALUES (?) returning degree_id");
+				pstmt.setString(1, request.getParameter("type"));
+			}
+			else {
+				pstmt = conn.prepareStatement(
+					"INSERT INTO \"Degree\"(type, concentration_id) VALUES (?,?) returning degree_id");
+				pstmt.setString(1, request.getParameter("type"));
+				pstmt.setInt(2, Integer.parseInt(request.getParameter("concentration_id")));
+			}
+			rs = pstmt.executeQuery();
+			rs.next();
+			degree_id = rs.getInt("degree_id");
 		}
 		else {
-			pstmt = conn.prepareStatement(
-				"INSERT INTO \"Degree\"(type, concentration_id) VALUES (?,?) returning degree_id");
-			pstmt.setString(1, request.getParameter("type"));
-			pstmt.setInt(2, Integer.parseInt(request.getParameter("concentration_id")));
+			degree_id = Integer.parseInt(request.getParameter("degree_id"));
+			System.err.println("rs not null");
 		}
-		rs = pstmt.executeQuery();
-		rs.next();
-		degree_id = rs.getInt("degree_id");
 
 		pstmt = conn.prepareStatement(
 				"INSERT INTO \"Degree_RU\"(degree_id, ru_id) VALUES (?, ?)");
