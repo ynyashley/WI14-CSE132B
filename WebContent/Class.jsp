@@ -24,7 +24,8 @@
 	<table border="1">
 		<tr>
 			<th>Course ID</th>
-			<th>Units</th>
+			<th>Min. Units</th>
+			<th>Max. Units</th>
 			<th>Lab work required</th>
 			<th>Grade Option</th>
 		</tr>
@@ -34,7 +35,8 @@
 	%>
 		<tr>
 			<td><input type="submit" value="<%=rs1.getString("course_id")%>" name="course_id"></td>
-			<td><%=rs1.getInt("unit") %></td>
+			<td><%=rs1.getInt("min_unit") %></td>
+			<td><%=rs1.getInt("max_unit") %></td>
 			<td><%=rs1.getBoolean("lab_work") %></td>
 			<td><%=rs1.getString("option") %>
 		</tr>

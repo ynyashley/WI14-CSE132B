@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Degree</title>
+<title>Degree Requirement Form</title>
 </head>
 <body>
 <%@ page language="java" import="java.sql.*" %>
@@ -33,13 +33,9 @@
 		// Create prepared statement and use it to INSERT the Class
 		// attributes INTO the Course table.
 		PreparedStatement pstmt;
+		System.out.println("degree_id: " + request.getParameter("degree_id"));
 		
-		if(!request.getParameter("degree_id").equals("null")) {
-			rs = statement.executeQuery("SELECT * FROM \"Degree\" WHERE degree_id=" + request.getParameter("degree_id"));
-			System.err.println("degree_id from param not null");
-		}
-		
-		if(rs == null) {
+		if(request.getParameter("degree_id") == null) {
 			if(request.getParameter("concentration_id").equals("Skip")) {
 				pstmt = conn.prepareStatement(
 						"INSERT INTO \"Degree\"(type) VALUES (?) returning degree_id");
@@ -57,7 +53,6 @@
 		}
 		else {
 			degree_id = Integer.parseInt(request.getParameter("degree_id"));
-			System.err.println("rs not null");
 		}
 
 		pstmt = conn.prepareStatement(

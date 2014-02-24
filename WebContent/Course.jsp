@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Course Information</title>
+<title>Course Entry Form</title>
 </head>
 <body>
 <%@ page language="java" import="java.sql.*" %>
@@ -13,6 +13,7 @@
 %>
 
 <!-- HTML Code to create the entry form -->
+<h3>Enter new course information using the form below:</h3>
 <form action="Prereq.jsp" method="post">
 	<input type="hidden" value="insert" name="action">
 	Course number(with department abbreviation): <input type="text" name="course_id"><br>
@@ -23,7 +24,8 @@
 		<option value="2">Letter Grade or S/U</option>
 		<option value="3">S/U Only</option>
 	</select><br>
-	Unit(s): <input type="number" name="unit" min="1" max="8"><br>
+	Minimum number of unit(s): <input type="number" name="min_unit" min="1" max="8"><br>
+	Maximum number of unit(s): <input type="number" name="max_unit" min="1" max="8"><br>
 	Lab work required:
 	<select name="lab_work">
 		<option value="true">Yes</option>

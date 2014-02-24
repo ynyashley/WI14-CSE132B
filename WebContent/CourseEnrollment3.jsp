@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>New Department Form</title>
+<title>Class Information</title>
 </head>
 <body>
-<h2>New Department Form</h2>
 <%@ page language="java" import="java.sql.*" %>
 <% try{
 		Class.forName("org.postgresql.Driver");
@@ -15,14 +14,28 @@
 		conn = DriverManager.getConnection(
 	   	"jdbc:postgresql://localhost:5432/cse132b","postgres", "YUNGp12594");
 %>
+<%-- Insert Code --%>
+<%
+	String student_id = request.getParameter("student_id");
+	int section_id = Integer.parseInt(request.getParameter("section_id"));
+	int unit = Integer.parseInt(request.getParameter("unit"));
 
-<!-- HTML Code to create the entry form -->
-<form action="New_Department2.jsp" method="get">
-	<input type="hidden" value="insert" name="action">
-	Department Name: <input type="text" name="department_name">
-	<input type="submit" value="Submit">
-</form>
-<!-- End HTML Code for entry form -->
+	// begin transaction
+	conn.setAutoCommit(false);
+	
+	PreparedStatement pstmt = conn.prepareStatement(
+			"INSERT INTO \"Student_Section\"(student_id, section_id, unit) VALUES (?, ?, ?)");
+	pstmt.setString(1, student_id);
+	pstmt.setInt(2, section_id);
+	pstmt.setInt(3, unit);
+	
+	pstmt.executeUpdate();
+	
+	conn.commit();
+	conn.setAutoCommit(true);
+%>
+You have successfully enrolled in section <%=section_id %>.
+
 <%-- Close Connection Code --%>
 <%
 	conn.close();

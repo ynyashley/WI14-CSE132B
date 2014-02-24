@@ -34,9 +34,10 @@
 <%
 	}
 	else {
-		pstmt = conn.prepareStatement("INSERT INTO \"Student_Section\"(student_id, section_id) VALUES (?, ?)");
+		pstmt = conn.prepareStatement("INSERT INTO \"Student_Section\"(student_id, section_id, grade_id) VALUES (?, ?, ?)");
 		pstmt.setString(1, student_id);
 		pstmt.setInt(2, Integer.parseInt(request.getParameter("section_id")));
+		pstmt.setInt(3, Integer.parseInt(request.getParameter("grade")));
 		pstmt.executeUpdate();
 		
 		conn.commit();

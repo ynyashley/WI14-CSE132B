@@ -28,11 +28,12 @@
 		ResultSet rs1 = statement.executeQuery("SELECT * FROM \"Course\" WHERE course_id='"+ request.getParameter("course_id") + "'");
 		if(!rs1.next()) {
 			pstmt = conn.prepareStatement(
-					"INSERT INTO \"Course\"(course_id, go_id, unit, lab_work) VALUES (?, ?, ?, ?)");
+					"INSERT INTO \"Course\"(course_id, go_id, max_unit, min_unit, lab_work) VALUES (?, ?, ?, ?, ?)");
 			pstmt.setString(1, request.getParameter("course_id"));
 			pstmt.setInt(2, Integer.parseInt(request.getParameter("grade_option")));
-			pstmt.setInt(3, Integer.parseInt(request.getParameter("unit")));
-			pstmt.setBoolean(4, Boolean.parseBoolean(request.getParameter("lab_work")));
+			pstmt.setInt(3, Integer.parseInt(request.getParameter("max_unit")));
+			pstmt.setInt(4, Integer.parseInt(request.getParameter("min_unit")));
+			pstmt.setBoolean(5, Boolean.parseBoolean(request.getParameter("lab_work")));
 			
 			pstmt.executeUpdate();
 		}

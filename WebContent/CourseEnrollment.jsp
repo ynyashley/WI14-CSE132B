@@ -51,7 +51,6 @@
 <%
 	// Close the ResultSet
 	rs1.close();
-	//rs2.close();
 	statement.close();
 		
 	conn.close();

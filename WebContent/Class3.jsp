@@ -16,28 +16,34 @@
 %>
 <%-- Insert Code --%>
 <%
-	ResultSet rs = null;
+	ResultSet rs1, rs2, rs3;
+	PreparedStatement pstmt;
 	int class_id = 0;
 	String course_id = request.getParameter("course_id");
 	String action = request.getParameter("action");
-
+	Statement statement = conn.createStatement();
+	
 	// begin transaction
 	conn.setAutoCommit(false);
 	
-	// Create prepared statement and use it to INSERT the Class
-	// attributes INTO the Course table.
-	
-	PreparedStatement pstmt = conn.prepareStatement(
-		"INSERT INTO \"Class\"(title, year, quarter) VALUES (?, ?, ?) returning class_id");
-	pstmt.setString(1, request.getParameter("title"));
-	pstmt.setInt(2, Integer.parseInt(request.getParameter("year")));
-	pstmt.setString(3, request.getParameter("quarter"));
-	
-	rs = pstmt.executeQuery();
-	rs.next();
-	class_id = rs.getInt("class_id");
-	System.out.println("class_id " + class_id);
-	
+	if(request.getParameter("class_id") == null) {
+		// Create prepared statement and use it to INSERT the Class
+		// attributes INTO the Course table.
+		
+		pstmt = conn.prepareStatement(
+			"INSERT INTO \"Class\"(title, year, quarter) VALUES (?, ?, ?) returning class_id");
+		pstmt.setString(1, request.getParameter("title"));
+		pstmt.setInt(2, Integer.parseInt(request.getParameter("year")));
+		pstmt.setString(3, request.getParameter("quarter"));
+		
+		rs1 = pstmt.executeQuery();
+		rs1.next();
+		class_id = rs1.getInt("class_id");
+	}
+	else {
+		class_id = Integer.parseInt(request.getParameter("class_id"));
+	}
+
 	pstmt = conn.prepareStatement(
 			"INSERT INTO \"Course_Class\"(course_id, class_id) VALUES (?, ?)");
 	pstmt.setString(1, course_id);
@@ -49,8 +55,7 @@
 	conn.setAutoCommit(true);
 %>
 <%
-	Statement statement = conn.createStatement();
-	ResultSet rs3 = statement.executeQuery("SELECT name FROM \"Faculty\"");
+	rs3 = statement.executeQuery("SELECT name FROM \"Faculty\"");
 %>
 
 <!-- HTML Code to create the entry form -->
@@ -73,7 +78,6 @@
 		}
 	%>
 	</table>
-	<input type="submit" value="Add Another Section">
 	<input type="hidden" value="<%=class_id %>" name="class_id">
 	<input type="hidden" value="<%=course_id %>" name="course_id">
 	<input type="hidden" value="<%=request.getParameter("class_id") %>" name="class_id">

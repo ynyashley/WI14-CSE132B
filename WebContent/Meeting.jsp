@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Meeting</title>
+<title>Meetings (Lecture/Discussion/Review Sessions) Entry Form</title>
 </head>
 <body>
 <%@ page language="java" import="java.sql.*" %>
@@ -54,7 +54,12 @@
 		<option value=1>yes</option>
 		<option value=0>no</option>
 	</select><br>
-	Type: <input type="text" name="type"><br>
+	Type: 
+	<select name="type">
+		<option value="Lecture">Lecture</option>
+		<option value="Discussion">Discussion</option>
+		<option value="Review Session">Review Session</option>
+	</select><br>
 <input type="submit" value="Submit">
 </form>
 <!-- End HTML Code for entry form -->

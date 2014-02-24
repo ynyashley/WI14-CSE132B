@@ -44,7 +44,16 @@ Please provide information about the courses you took:
 		%>
 	</table>
 	Your student ID: <input type="text" name="student_id"><br>
-	Grade received: <input type="text" name="grade"><br>
+	Grade received:
+	<select name="grade">
+		<option value="1">A</option>
+		<option value="2">B</option>
+		<option value="3">C</option>
+		<option value="4">D</option>
+		<option value="5">F</option>
+		<option value="6">S</option>
+		<option value="7">U</option>
+	</select>
 	Section ID(refer to the column "Section ID" from above):<input type="text" name="section_id"><br>
 	<input type="submit" name="Submit">
 </form>

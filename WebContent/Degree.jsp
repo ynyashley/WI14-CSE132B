@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Degree</title>
+<title>Degree Requirement Form</title>
 </head>
 <body>
 <%@ page language="java" import="java.sql.*" %>
