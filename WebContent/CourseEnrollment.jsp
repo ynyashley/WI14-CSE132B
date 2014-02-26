@@ -15,6 +15,8 @@
 <%-- Select Courses to display on the page for selection --%>
 <% 
 	Statement statement = conn.createStatement();
+	int section_id = 0;
+	String student_id = request.getParameter("student_id");
 	ResultSet rs1 = statement.executeQuery("SELECT * FROM \"Section\" JOIN \"Faculty\" ON \"Faculty\".faculty_id = \"Section\".faculty_id");
 %>
 
@@ -32,9 +34,10 @@
 	<%-- Iteration Code --%>
 	<%
 		while(rs1.next()) {
+			section_id = rs1.getInt("section_id");
 	%>
 		<tr>
-			<td><input type="submit" value="<%=rs1.getInt("section_id")%>" name="section_id"></td>
+			<td><input type="submit" value="<%=section_id%>" name="section_id"></td>
 			<td><%=rs1.getString("name") %></td>
 			<td><%=rs1.getString("title") %></td>
 			<td><%=rs1.getInt("enrollment_limit") %></td>
@@ -43,14 +46,14 @@
 		}
 	%>
 	</table>
-	<input type="hidden" value="<%=rs1.getInt("section_id") %>" name="section_id">
-	<input type="hidden" value="<%=request.getParameter("student_id") %>" name="student_id">
+	<input type="hidden" value="<%=section_id %>" name="section_id">
+	<input type="hidden" value="<%=student_id %>" name="student_id">
 </form>
 
 <%-- Close Connection Code --%>
 <%
 	// Close the ResultSet
-	rs1.close();
+	//rs1.close();
 	statement.close();
 		
 	conn.close();

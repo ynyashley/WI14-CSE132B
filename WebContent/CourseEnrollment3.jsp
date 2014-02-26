@@ -19,7 +19,9 @@
 	String student_id = request.getParameter("student_id");
 	int section_id = Integer.parseInt(request.getParameter("section_id"));
 	int unit = Integer.parseInt(request.getParameter("unit"));
-
+	System.out.println(unit);
+	System.out.println(section_id);
+	System.out.println(student_id);
 	// begin transaction
 	conn.setAutoCommit(false);
 	
@@ -40,6 +42,7 @@ You have successfully enrolled in section <%=section_id %>.
 <%
 	conn.close();
 	} catch(Exception e) {
+		System.err.println("CourseEnrollment3");
 		e.printStackTrace();
 	}
 %>

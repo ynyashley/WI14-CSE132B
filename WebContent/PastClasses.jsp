@@ -53,7 +53,7 @@ Please provide information about the courses you took:
 		<option value="5">F</option>
 		<option value="6">S</option>
 		<option value="7">U</option>
-	</select>
+	</select><br>
 	Section ID(refer to the column "Section ID" from above):<input type="text" name="section_id"><br>
 	<input type="submit" name="Submit">
 </form>

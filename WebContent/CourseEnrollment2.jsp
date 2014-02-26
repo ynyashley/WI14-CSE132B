@@ -17,7 +17,7 @@
 <%-- Insert Code --%>
 <%
 	int section_id = Integer.parseInt(request.getParameter("section_id"));
-	int student_id = Integer.parseInt(request.getParameter("student_id"));
+	String student_id = request.getParameter("student_id");
 	int class_id = 0;
 	String course_id = null;
 	int min_unit = 0;
@@ -25,15 +25,11 @@
 	// begin transaction
 	conn.setAutoCommit(false);
 	
-	// Create prepared statement and use it to INSERT the Class
-	// attributes INTO the Course table.
-	
 	Statement statement = conn.createStatement();
-	ResultSet rs1 = statement.executeQuery("SELECT class_id FROM \"Class_Section\" WHERE section_id=" + section_id);
-	while(rs1.next()) {
-		class_id = rs1.getInt("class_id");
-	}
-	System.err.println("class_id: " + class_id);
+	ResultSet rs1 = statement.executeQuery("SELECT * FROM \"Class_Section\" WHERE section_id=" + section_id);
+	rs1.next();
+	class_id = rs1.getInt("class_id");
+	System.out.println("class_id: " + class_id);
 	rs1.close();
 	
 	statement = conn.createStatement();
@@ -41,7 +37,7 @@
 	while(rs2.next()) {
 		course_id = rs2.getString("course_id");
 	}
-	System.err.println("course_id: " + course_id);
+	System.out.println("course_id: " + course_id);
 	rs2.close();
 		
 	statement = conn.createStatement();
@@ -54,10 +50,9 @@
 		rs3.close();
 	}
 
-	System.err.println("min: " + min_unit);
-	System.err.println("max: " + max_unit);
+	System.out.println("min: " + min_unit);
+	System.out.println("max: " + max_unit);
 	
-	// if course is not flexible on unit
 	if(min_unit == max_unit) {
 		PreparedStatement pstmt = conn.prepareStatement(
 				"INSERT INTO \"Student_Section\"(student_id, section_id, unit) VALUES (?, ?, ?)");
@@ -75,7 +70,7 @@ You have successfully enrolled in section <%=section_id %>.
 	}
 	else {	// prompt user to enter how many units he wants to take
 %>
-<form action="CourseOffering3.jsp" method="get">
+<form action="CourseEnrollment3.jsp" method="get">
 Number of units you would like to take:
 <input type="number" min="<%=min_unit %>" max= "<%=max_unit %>" name="unit">
 <input type="hidden" value="<%=student_id %>" name="student_id">
